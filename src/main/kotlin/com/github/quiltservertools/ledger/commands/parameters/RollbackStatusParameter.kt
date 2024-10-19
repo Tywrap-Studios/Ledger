@@ -14,7 +14,7 @@ class RollbackStatusParameter : SimpleParameter<Boolean>() {
         BoolArgumentType.bool().parse(stringReader)
     } catch (e: CommandSyntaxException) {
         stringReader.readString()
-        false // TODO Maybe rework parser to alert errors and not require a default value
+        false // TODO Ledger: Maybe rework parser to alert errors and not require a default value
     }
 
     override fun getSuggestions(

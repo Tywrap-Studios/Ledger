@@ -220,8 +220,8 @@ object DatabaseManager {
             type.timestamp = action[Tables.Actions.timestamp]
             type.pos = BlockPos(action[Tables.Actions.x], action[Tables.Actions.y], action[Tables.Actions.z])
             type.world = Identifier.tryParse(action[Tables.Worlds.identifier])
-            type.objectIdentifier = Identifier.of(action[Tables.ObjectIdentifiers.identifier])
-            type.oldObjectIdentifier = Identifier.of(
+            type.objectIdentifier = Identifier(action[Tables.ObjectIdentifiers.identifier])
+            type.oldObjectIdentifier = Identifier(
                 action[Tables.ObjectIdentifiers.alias("oldObjects")[Tables.ObjectIdentifiers.identifier]]
             )
             type.objectState = action[Tables.Actions.blockState]
@@ -503,7 +503,7 @@ object DatabaseManager {
         query = query.limit(
             config[SearchSpec.pageSize],
             (config[SearchSpec.pageSize] * (page - 1)).toLong()
-        ) // TODO better pagination without offset - probably doesn't matter as most people stay on first few pages
+        ) // TODO Ledger: better pagination without offset - probably doesn't matter as most people stay on first few pages
 
         actions.addAll(getActionsFromQuery(query))
 

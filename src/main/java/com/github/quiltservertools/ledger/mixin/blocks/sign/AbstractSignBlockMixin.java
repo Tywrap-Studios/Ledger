@@ -10,7 +10,6 @@ import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.SignChangingItem;
-import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -37,7 +36,7 @@ public class AbstractSignBlockMixin {
      * @return Returns the result of calling {@code original} with this method's parameters.
      */
     @WrapOperation(
-            method = "onUseWithItem",
+            method = "onUse",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/item/SignChangingItem;useOnSign(Lnet/minecraft/world/World;Lnet/minecraft/block/entity/SignBlockEntity;ZLnet/minecraft/entity/player/PlayerEntity;)Z"
@@ -54,10 +53,9 @@ public class AbstractSignBlockMixin {
 
         BlockState state = signBlockEntity.getCachedState();
         BlockPos pos = signBlockEntity.getPos();
-        DynamicRegistryManager registryManager = world.getRegistryManager();
 
         // a bad hack to copy the old sign block entity for rollbacks
-        @Nullable BlockEntity oldSignEntity = BlockEntity.createFromNbt(pos, state, signBlockEntity.createNbtWithId(registryManager), registryManager);
+        @Nullable BlockEntity oldSignEntity = BlockEntity.createFromNbt(pos, state, signBlockEntity.createNbtWithId());
 
         boolean result = original.call(instance, world, signBlockEntity, front, player);
         if (result && oldSignEntity != null) {

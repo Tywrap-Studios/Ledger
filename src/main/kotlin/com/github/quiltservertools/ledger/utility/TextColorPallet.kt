@@ -8,17 +8,12 @@ import net.minecraft.text.TextColor
 
 @Suppress("MagicNumber")
 object TextColorPallet {
-    val primary: Style
-        get() = Style.EMPTY.withColor(TextColor.parse(config[ColorSpec.primary]).getOrNull())
-
-    val primaryVariant: Style get() = Style.EMPTY.withColor(
-        TextColor.parse(config[ColorSpec.primaryVariant]).getOrNull()
-    )
-    val secondary: Style get() = Style.EMPTY.withColor(TextColor.parse(config[ColorSpec.secondary]).getOrNull())
-    val secondaryVariant: Style get() = Style.EMPTY.withColor(
-        TextColor.parse(config[ColorSpec.secondaryVariant]).getOrNull()
-    )
-    val light: Style get() = Style.EMPTY.withColor(TextColor.parse(config[ColorSpec.light]).getOrNull())
+    val primary: Style get() = Style.EMPTY.withColor(TextColor.parse(config[ColorSpec.primary]))
+    val primaryVariant: Style get() = Style.EMPTY.withColor(TextColor.parse(config[ColorSpec.primaryVariant]))
+    val secondary: Style get() = Style.EMPTY.withColor(TextColor.parse(config[ColorSpec.secondary]))
+    val secondaryVariant: Style get() = Style.EMPTY.withColor(TextColor.parse(config[ColorSpec.secondaryVariant]))
+    val light: Style get() = Style.EMPTY.withColor(TextColor.parse(config[ColorSpec.light]))
 }
 
 fun DataResult<TextColor>.getOrNull(): TextColor? = this.result().orElse(null)
+// IDK what this is for, and it does nothing, but I'll keep it nonetheless.

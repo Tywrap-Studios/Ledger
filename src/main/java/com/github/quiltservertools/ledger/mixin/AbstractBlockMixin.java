@@ -22,6 +22,8 @@ import java.util.function.BiConsumer;
 @Mixin(AbstractBlock.class)
 public abstract class AbstractBlockMixin {
 
+    //TODO: Find out how this is handled in 1.20.1 Ledger
+
     @Inject(
             method = "onExploded",
             at = @At(

@@ -17,7 +17,7 @@ object IdentifierSerializer : JsonSerializer<Identifier>() {
 }
 
 object IdentifierDeserializer : JsonDeserializer<Identifier>() {
-    override fun deserialize(p: JsonParser, ctxt: DeserializationContext): Identifier = Identifier.of(p.valueAsString)
+    override fun deserialize(p: JsonParser, ctxt: DeserializationContext): Identifier = Identifier(p.valueAsString)
 }
 
 @JsonSerialize(using = IdentifierSerializer::class)

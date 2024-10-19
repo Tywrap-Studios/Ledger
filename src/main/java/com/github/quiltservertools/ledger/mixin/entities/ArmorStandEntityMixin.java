@@ -45,7 +45,7 @@ public abstract class ArmorStandEntityMixin {
     }
 
     @Inject(method = "updateHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/decoration/ArmorStandEntity;kill()V"))
-    private void ledgerArmorStandKill(ServerWorld world, DamageSource damageSource, float amount, CallbackInfo ci) {
+    private void ledgerArmorStandKill(DamageSource damageSource, float amount, CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
         EntityKillCallback.EVENT.invoker().kill(entity.getWorld(), entity.getBlockPos(), entity, damageSource);
     }

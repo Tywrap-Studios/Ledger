@@ -20,6 +20,8 @@ import static net.minecraft.block.JukeboxBlock.HAS_RECORD;
 @Mixin(JukeboxPlayableComponent.class)
 public abstract class JukeboxPlayableComponentMixin {
 
+    //TODO: This class doesn't exist, find out how Ledger 1.20.1 does it
+
     @Inject(method = "tryPlayStack", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/block/entity/JukeboxBlockEntity;setStack(Lnet/minecraft/item/ItemStack;)V"))
     private static void ledgerPlayerInsertMusicDisc(World world, BlockPos pos, ItemStack itemStack, PlayerEntity player, CallbackInfoReturnable<ItemActionResult> cir) {

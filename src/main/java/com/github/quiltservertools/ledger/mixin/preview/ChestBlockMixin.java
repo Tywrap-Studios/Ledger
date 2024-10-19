@@ -15,6 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(targets = "net/minecraft/block/ChestBlock$2$1")
 public abstract class ChestBlockMixin {
 
+    //TODO: Find out the 1.20.1 counterpart
+
     @Shadow
     ChestBlockEntity field_17358;
 

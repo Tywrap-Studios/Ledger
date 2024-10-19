@@ -25,7 +25,7 @@ open class BlockChangeActionType : AbstractActionType() {
     override fun rollback(server: MinecraftServer): Boolean {
         val world = server.getWorld(world)
         world?.setBlockState(pos, oldBlockState())
-        world?.getBlockEntity(pos)?.read(StringNbtReader.parse(extraData), server.registryManager)
+        world?.getBlockEntity(pos)?.readNbt(StringNbtReader.parse(extraData))
         world?.chunkManager?.markForUpdate(pos)
 
         return true

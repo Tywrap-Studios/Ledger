@@ -13,8 +13,8 @@ private const val MAX_LENGTH = 16
 object ActionRegistry {
     private val actionTypes = Object2ObjectOpenHashMap<String, Supplier<ActionType>>()
 
-    // TODO make this better
-    // TODO create some sort of action identifier with grouping
+    // TODO Ledger: make this better
+    // TODO Ledger: create some sort of action identifier with grouping
     fun registerActionType(supplier: Supplier<ActionType>) {
         val id = supplier.get().identifier
         require(id.length <= MAX_LENGTH)
