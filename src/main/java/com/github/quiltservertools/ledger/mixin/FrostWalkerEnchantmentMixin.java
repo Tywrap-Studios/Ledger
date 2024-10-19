@@ -17,13 +17,16 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(ReplaceDiskEnchantmentEffect.class)
 public abstract class FrostWalkerEnchantmentMixin {
+
+    //TODO: This class doesn't exist in 1.20.1, find out how Ledger 1.20.1 tries to do this
+
     @ModifyArgs(method = "apply", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)Z"))
     private void logFrostWalkerPlacement(Args args, ServerWorld world, int level, EnchantmentEffectContext context, Entity entity, Vec3d vec3d) {
         // Frosted ice block is hardcoded in target class
         BlockPos pos = args.get(0);
         BlockState state = args.get(1);
         pos = pos.toImmutable();
-        // TODO 1.21 - Datapacks can use this. The source might need to be renamed
+        // TODO Ledger: 1.21 - Datapacks can use this. The source might need to be renamed
         BlockPlaceCallback.EVENT.invoker().place(world, pos, state, null, Sources.FROST_WALKER,
                 entity instanceof PlayerEntity ? (PlayerEntity) entity : null);
     }

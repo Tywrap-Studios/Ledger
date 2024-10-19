@@ -21,6 +21,8 @@ import java.util.*
 
 data class HandshakeC2SPacket(val nbt: NbtCompound?) : CustomPayload {
 
+    // TODO: ALL OF THIS IDK ABOUT, MIGHT NEED INSIGHT FROM ORIGINAL DEVS
+
     override fun getId() = ID
 
     companion object : ServerPlayNetworking.PlayPayloadHandler<HandshakeC2SPacket> {

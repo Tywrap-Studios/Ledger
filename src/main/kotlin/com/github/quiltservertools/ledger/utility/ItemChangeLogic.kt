@@ -4,6 +4,7 @@ import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 
 fun addItem(rollbackStack: ItemStack, inventory: Inventory): Boolean {
+    // TODO: translate what ItemStack.areItemsAndComponentsEqual is
     // Check if the inventory has enough space
     var matchingCountLeft = 0
     for (i in 0 until inventory.size()) {

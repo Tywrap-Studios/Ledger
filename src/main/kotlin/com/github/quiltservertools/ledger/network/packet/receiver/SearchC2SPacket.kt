@@ -20,6 +20,8 @@ import net.minecraft.text.Text
 
 data class SearchC2SPacket(val args: String, val pages: Int) : CustomPayload {
 
+    // TODO: ALL OF THIS IDK ABOUT, MIGHT NEED INSIGHT FROM ORIGINAL DEVS
+
     override fun getId() = ID
 
     companion object : ServerPlayNetworking.PlayPayloadHandler<SearchC2SPacket> {

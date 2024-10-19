@@ -37,10 +37,10 @@ class EntityChangeActionType : AbstractActionType() {
         if (extraData == null) return ItemStack.EMPTY
         try {
             val itemTag = StringNbtReader.parse(extraData)
-            return ItemStack.fromNbt(registryManager, itemTag).orElse(ItemStack.EMPTY)
+            return ItemStack.fromNbt(registryManager, itemTag).orElse(ItemStack.EMPTY) // TODO: Check this out
         } catch (_: CommandSyntaxException) {
             // In an earlier version of ledger extraData only stored the item id
-            val item = Registries.ITEM.get(Identifier.of(extraData))
+            val item = Registries.ITEM.get(Identifier(extraData))
             return item.defaultStack
         }
     }

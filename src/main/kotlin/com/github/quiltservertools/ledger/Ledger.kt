@@ -31,7 +31,6 @@ import kotlinx.coroutines.withTimeout
 import net.fabricmc.api.DedicatedServerModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.registry.Registries
 import net.minecraft.server.MinecraftServer
@@ -84,6 +83,7 @@ object Ledger : DedicatedServerModInitializer, CoroutineScope {
         PayloadTypeRegistry.playS2C().register(ActionS2CPacket.ID, ActionS2CPacket.CODEC)
         PayloadTypeRegistry.playS2C().register(HandshakeS2CPacket.ID, HandshakeS2CPacket.CODEC)
         PayloadTypeRegistry.playS2C().register(ResponseS2CPacket.ID, ResponseS2CPacket.CODEC)
+        // TODO: WHY IS IT ALWAYS NETWORKING
     }
 
     private fun serverStarting(server: MinecraftServer) {

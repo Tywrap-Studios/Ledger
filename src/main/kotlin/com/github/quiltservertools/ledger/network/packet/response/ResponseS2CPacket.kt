@@ -7,6 +7,9 @@ import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.packet.CustomPayload
 
 data class ResponseS2CPacket(val content: ResponseContent) : CustomPayload {
+
+    // TODO: ALL OF THIS IDK ABOUT, MIGHT NEED INSIGHT FROM ORIGINAL DEVS
+
     fun write(buf: PacketByteBuf?) {
         // Packet type, rollback response would be `ledger.rollback`
         buf?.writeIdentifier(content.type)

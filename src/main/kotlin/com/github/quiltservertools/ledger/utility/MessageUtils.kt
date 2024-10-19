@@ -30,6 +30,7 @@ object MessageUtils {
                 networkResults.actions.forEach {
                     ServerPlayNetworking.send(source.player, ActionS2CPacket(it))
                 }
+                // TODO: Idk Networking, need to find out how and what to actually send.
             }
             return
         }

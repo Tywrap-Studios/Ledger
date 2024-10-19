@@ -61,5 +61,6 @@ object NbtUtils {
         }
 
         return ItemStack.fromNbt(registries, itemTag).orElse(ItemStack.EMPTY)
+        // TODO: translate ^
     }
 }

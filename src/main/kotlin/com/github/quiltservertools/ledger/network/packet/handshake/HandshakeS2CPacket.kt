@@ -2,10 +2,11 @@ package com.github.quiltservertools.ledger.network.packet.handshake
 
 import com.github.quiltservertools.ledger.network.packet.LedgerPacketTypes
 import net.minecraft.network.PacketByteBuf
-import net.minecraft.network.codec.PacketCodec
-import net.minecraft.network.packet.CustomPayload
 
 data class HandshakeS2CPacket(val content: HandshakeContent) : CustomPayload {
+
+    // TODO: ALL OF THIS IDK ABOUT, MIGHT NEED INSIGHT FROM ORIGINAL DEVS
+
     fun write(buf: PacketByteBuf?) {
         // Ledger information
         // Protocol Version

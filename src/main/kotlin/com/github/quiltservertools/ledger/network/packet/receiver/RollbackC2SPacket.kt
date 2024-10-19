@@ -17,6 +17,8 @@ import net.minecraft.network.packet.CustomPayload
 
 data class RollbackC2SPacket(val input: String) : CustomPayload {
 
+    // TODO: ALL OF THIS IDK ABOUT, MIGHT NEED INSIGHT FROM ORIGINAL DEVS
+
     override fun getId() = ID
 
     companion object : ServerPlayNetworking.PlayPayloadHandler<RollbackC2SPacket> {

@@ -12,6 +12,9 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.server.network.ServerPlayerEntity
 
 object Networking {
+
+    // TODO: Ah yes, Networking, Love this shit.
+
     // List of players who have a compatible client mod
     private var networkedPlayers = mutableSetOf<ServerPlayerEntity>()
     const val PROTOCOL_VERSION = 3

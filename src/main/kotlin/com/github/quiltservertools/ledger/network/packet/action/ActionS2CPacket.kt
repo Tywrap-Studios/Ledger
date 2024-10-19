@@ -3,11 +3,12 @@ package com.github.quiltservertools.ledger.network.packet.action
 import com.github.quiltservertools.ledger.actions.ActionType
 import com.github.quiltservertools.ledger.network.packet.LedgerPacketTypes
 import net.minecraft.network.PacketByteBuf
-import net.minecraft.network.codec.PacketCodec
-import net.minecraft.network.packet.CustomPayload
-import net.minecraft.network.packet.CustomPayload.Id
+import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket
 
 data class ActionS2CPacket(val content: ActionType) : CustomPayload {
+
+    // TODO: ALL OF THIS IDK ABOUT, MIGHT NEED INSIGHT FROM ORIGINAL DEVS
+
     private fun write(buf: PacketByteBuf?) {
         // Position
         buf?.writeBlockPos(content.pos)
@@ -32,7 +33,7 @@ data class ActionS2CPacket(val content: ActionType) : CustomPayload {
 
     companion object {
         val ID: Id<ActionS2CPacket> = Id(LedgerPacketTypes.ACTION.id)
-        val CODEC: PacketCodec<PacketByteBuf, ActionS2CPacket> = CustomPayload.codecOf(
+        val CODEC: PacketCodec<PacketByteBuf, ActionS2CPacket> = CustomPayloadS2CPacket.codecOf(
             ActionS2CPacket::write
         ) { _: PacketByteBuf? -> TODO() }
     }

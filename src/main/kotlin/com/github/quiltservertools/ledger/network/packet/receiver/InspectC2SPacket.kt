@@ -19,6 +19,8 @@ import net.minecraft.util.math.BlockPos
 
 data class InspectC2SPacket(val pos: BlockPos, val pages: Int) : CustomPayload {
 
+    // TODO: ALL OF THIS IDK ABOUT, MIGHT NEED INSIGHT FROM ORIGINAL DEVS
+
     override fun getId() = ID
 
     companion object : ServerPlayNetworking.PlayPayloadHandler<InspectC2SPacket> {
