@@ -198,9 +198,7 @@ detekt {
 }
 
 gitHooks {
-    setHooks(
-        mapOf("pre-commit" to "detekt")
-    )
+    setHooks(mapOf("pre-commit" to "detekt"))
 }
 
 fun getVersionMetadata(): String {

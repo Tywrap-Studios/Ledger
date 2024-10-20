@@ -5,8 +5,10 @@
     "name": "${name}",
     "description": "Logs world events and allows for them to be rolled back",
     "authors": [
-        "Potatoboy9999",
-        "*-Forked and backported by Tywrap Studios:-*",
+        "Original by QuiltServerTools:",
+        ">>Potatoboy9999",
+        "",
+        "Forked and backported by Tywrap Studios:",
         ">>Tiazzz"
     ],
     "contact": {
