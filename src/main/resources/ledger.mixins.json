@@ -2,7 +2,6 @@
     "required": true,
     "package": "com.github.quiltservertools.ledger.mixin",
     "mixins": [
-        "AbstractBlockMixin",
         "AnvilScreenHandlerMixin",
         "AxeItemMixin",
         "BlockItemMixin",
@@ -19,7 +18,7 @@
         "HoeItemMixin",
         "HoneycombItemMixin",
         "ItemScattererMixin",
-        "JukeboxPlayableComponentMixin",
+        "MusicDiscItemMixin",
         "LockableContainerBlockEntityMixin",
         "NetherPortalMixin",
         "ScreenHandlerMixin",

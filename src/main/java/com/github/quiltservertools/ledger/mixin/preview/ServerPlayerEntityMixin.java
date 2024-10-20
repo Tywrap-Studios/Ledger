@@ -52,6 +52,6 @@ public abstract class ServerPlayerEntityMixin {
                 removeMatchingItem(modifiedItem.component1(), inventory);
             }
         }
-        return inventory.getHeldStacks();
+        return inventory.stacks;
     }
 }
