@@ -4,14 +4,13 @@ import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 
 fun addItem(rollbackStack: ItemStack, inventory: Inventory): Boolean {
-    // TODO: translate what ItemStack.areItemsAndComponentsEqual is
     // Check if the inventory has enough space
     var matchingCountLeft = 0
     for (i in 0 until inventory.size()) {
         val stack = inventory.getStack(i)
         if (stack.isEmpty) {
             matchingCountLeft += rollbackStack.maxCount
-        } else if (ItemStack.areItemsAndComponentsEqual(stack, rollbackStack)) {
+        } else if (ItemStack.canCombine(stack, rollbackStack)) {
             matchingCountLeft += stack.maxCount - stack.count
         }
     }
@@ -29,7 +28,7 @@ fun addItem(rollbackStack: ItemStack, inventory: Inventory): Boolean {
                 inventory.setStack(i, rollbackStack.copyWithCount(requiredCount))
                 requiredCount = 0
             }
-        } else if (ItemStack.areItemsAndComponentsEqual(stack, rollbackStack)) {
+        } else if (ItemStack.canCombine(stack, rollbackStack)) {
             val countUntilMax = rollbackStack.maxCount - stack.count
             if (requiredCount > countUntilMax) {
                 inventory.setStack(i, rollbackStack.copyWithCount(rollbackStack.maxCount))
@@ -51,7 +50,7 @@ fun removeMatchingItem(rollbackStack: ItemStack, inventory: Inventory): Boolean 
     var matchingCount = 0
     for (i in 0 until inventory.size()) {
         val stack = inventory.getStack(i)
-        if (ItemStack.areItemsAndComponentsEqual(stack, rollbackStack)) {
+        if (ItemStack.canCombine(stack, rollbackStack)) {
             matchingCount += stack.count
         }
     }
@@ -61,7 +60,7 @@ fun removeMatchingItem(rollbackStack: ItemStack, inventory: Inventory): Boolean 
     var requiredCount = rollbackStack.count
     for (i in 0 until inventory.size()) {
         val stack = inventory.getStack(i)
-        if (ItemStack.areItemsAndComponentsEqual(stack, rollbackStack)) {
+        if (ItemStack.canCombine(stack, rollbackStack)) {
             if (requiredCount < stack.count) {
                 // Only some parts of this stack are needed
                 inventory.setStack(i, stack.copyWithCount(stack.count - requiredCount))

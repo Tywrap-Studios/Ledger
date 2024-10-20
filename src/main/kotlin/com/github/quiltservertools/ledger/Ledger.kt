@@ -15,9 +15,6 @@ import com.github.quiltservertools.ledger.listeners.registerEntityListeners
 import com.github.quiltservertools.ledger.listeners.registerPlayerListeners
 import com.github.quiltservertools.ledger.listeners.registerWorldEventListeners
 import com.github.quiltservertools.ledger.network.Networking
-import com.github.quiltservertools.ledger.network.packet.action.ActionS2CPacket
-import com.github.quiltservertools.ledger.network.packet.handshake.HandshakeS2CPacket
-import com.github.quiltservertools.ledger.network.packet.response.ResponseS2CPacket
 import com.github.quiltservertools.ledger.registry.ActionRegistry
 import com.uchuhimo.konf.Config
 import kotlinx.coroutines.CoroutineName
@@ -80,10 +77,6 @@ object Ledger : DedicatedServerModInitializer, CoroutineScope {
         ServerLifecycleEvents.SERVER_STARTING.register(::serverStarting)
         ServerLifecycleEvents.SERVER_STOPPED.register(::serverStopped)
         CommandRegistrationCallback.EVENT.register { dispatcher, _, _ -> registerCommands(dispatcher) }
-        PayloadTypeRegistry.playS2C().register(ActionS2CPacket.ID, ActionS2CPacket.CODEC)
-        PayloadTypeRegistry.playS2C().register(HandshakeS2CPacket.ID, HandshakeS2CPacket.CODEC)
-        PayloadTypeRegistry.playS2C().register(ResponseS2CPacket.ID, ResponseS2CPacket.CODEC)
-        // TODO: WHY IS IT ALWAYS NETWORKING
     }
 
     private fun serverStarting(server: MinecraftServer) {
@@ -145,7 +138,7 @@ object Ledger : DedicatedServerModInitializer, CoroutineScope {
         registerEntityListeners()
     }
 
-    fun identifier(path: String) = Identifier.of(MOD_ID, path)
+    fun identifier(path: String) = Identifier(MOD_ID, path)
 }
 
 fun logDebug(message: String) = Ledger.logger.debug(message)

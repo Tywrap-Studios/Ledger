@@ -36,7 +36,6 @@ import org.jetbrains.exposed.sql.Query
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.inSubQuery
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.lessEq
 import org.jetbrains.exposed.sql.SqlLogger
 import org.jetbrains.exposed.sql.Transaction
@@ -183,14 +182,14 @@ object DatabaseManager {
 
     suspend fun selectRollback(params: ActionSearchParams): List<ActionType> = execute {
         val query = buildQuery()
-            .where(buildQueryParams(params) and (Tables.Actions.rolledBack eq false))
+            .andWhere { buildQueryParams(params) and (Tables.Actions.rolledBack eq false) }
             .orderBy(Tables.Actions.id, SortOrder.DESC)
         return@execute getActionsFromQuery(query)
     }
 
     suspend fun selectRestore(params: ActionSearchParams): List<ActionType> = execute {
         val query = buildQuery()
-            .where(buildQueryParams(params) and (Tables.Actions.rolledBack eq true))
+            .andWhere { buildQueryParams(params) and (Tables.Actions.rolledBack eq true) }
             .orderBy(Tables.Actions.id, SortOrder.ASC)
         return@execute getActionsFromQuery(query)
     }
@@ -413,10 +412,10 @@ object DatabaseManager {
             delay(timeMillis = 1000)
         }
 
-        return newSuspendedTransaction(context = databaseContext, db = database) {
-            repetitionAttempts = MAX_QUERY_RETRIES
-            minRepetitionDelay = MIN_RETRY_DELAY
-            maxRepetitionDelay = MAX_RETRY_DELAY
+        return newSuspendedTransaction(db = database) {
+            var repetitionAttempts = MAX_QUERY_RETRIES
+            var minRepetitionDelay = MIN_RETRY_DELAY
+            var maxRepetitionDelay = MAX_RETRY_DELAY
 
             if (Ledger.config[DatabaseSpec.logSQL]) {
                 addLogger(object : SqlLogger {
@@ -663,11 +662,14 @@ object DatabaseManager {
         )
 
     // Workaround because can't delete from a join in exposed https://kotlinlang.slack.com/archives/C0CG7E0A1/p1605866974117400
-    private fun Transaction.purgeActions(params: ActionSearchParams) = Tables.Actions
-        .deleteWhere {
-            Tables.Actions.id inSubQuery Tables.Actions.select(Tables.Actions.id)
-                .where(buildQueryParams(params))
+    // Here I just used 1.2.8's thing, Tiazzz
+    private fun Transaction.purgeActions(params: ActionSearchParams) {
+        val query = buildQuery()
+        val actions = Tables.Action.wrapRows(query).toList()
+        actions.forEach { action ->
+            action.delete()
         }
+    }
 
     private fun Transaction.selectPlayers(players: Set<GameProfile>): List<PlayerResult> {
         val query = Tables.Players.selectAll()

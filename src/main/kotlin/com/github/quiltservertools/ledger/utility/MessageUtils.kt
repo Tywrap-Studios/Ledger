@@ -28,9 +28,10 @@ object MessageUtils {
             for (n in results.page..results.pages) {
                 val networkResults = DatabaseManager.searchActions(results.searchParams, n)
                 networkResults.actions.forEach {
-                    ServerPlayNetworking.send(source.player, ActionS2CPacket(it))
+                    val packet = ActionS2CPacket()
+                    packet.populate(it)
+                    ServerPlayNetworking.send(source.player, packet.channelId, packet.byteBuf)
                 }
-                // TODO: Idk Networking, need to find out how and what to actually send.
             }
             return
         }
@@ -98,7 +99,7 @@ object MessageUtils {
     }
 
     fun warnBusy(source: ServerCommandSource) {
-//        if (DatabaseManager.dbMutex.isLocked) { //TODO
+//        if (DatabaseManager.dbMutex.isLocked) { //TODO Ledger:
 //            source.sendFeedback(
 //                {
 //                    Text.translatable(

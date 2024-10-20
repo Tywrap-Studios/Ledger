@@ -46,7 +46,7 @@ object NbtUtils {
 
     fun itemFromProperties(tag: String?, name: Identifier, registries: RegistryWrapper.WrapperLookup): ItemStack {
         val extraDataTag = StringNbtReader.parse(tag ?: "{}")
-        var itemTag = extraDataTag
+        var itemTag = extraDataTag as NbtCompound
         if (!extraDataTag.contains(COUNT)) {
             // 1.20.4 and lower (need data fixing)
             itemTag.putString("id", name.toString())
@@ -57,10 +57,9 @@ object NbtUtils {
             itemTag = Schemas.getFixer().update(
                 TypeReferences.ITEM_STACK,
                 Dynamic(NbtOps.INSTANCE, itemTag), ITEM_NBT_DATA_VERSION, ITEM_COMPONENTS_DATA_VERSION
-            ).cast(NbtOps.INSTANCE) as NbtCompound?
+            ).cast(NbtOps.INSTANCE) as NbtCompound
         }
 
-        return ItemStack.fromNbt(registries, itemTag).orElse(ItemStack.EMPTY)
-        // TODO: translate ^
+        return ItemStack.fromNbt(itemTag)
     }
 }
