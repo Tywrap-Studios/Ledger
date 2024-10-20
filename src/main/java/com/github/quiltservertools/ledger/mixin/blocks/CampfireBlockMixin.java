@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(CampfireBlock.class)
 public abstract class CampfireBlockMixin {
@@ -31,10 +32,10 @@ public abstract class CampfireBlockMixin {
     public static BooleanProperty LIT;
 
     @Inject(method = "onUse", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/entity/player/PlayerEntity;incrementStat(Lnet/minecraft/util/Identifier;)V")
-    )
-    private void logCampfireAddItem(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir, BlockEntity oldBlockEntity) {
-        BlockChangeCallback.EVENT.invoker().changeBlock(world, pos, state, world.getBlockState(pos), oldBlockEntity, world.getBlockEntity(pos), Sources.INSERT, player);
+            target = "Lnet/minecraft/entity/player/PlayerEntity;incrementStat(Lnet/minecraft/util/Identifier;)V"),
+            locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    public void logCampfireAddItem(BlockState blockState, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir, BlockEntity oldBlockEntity) {
+        BlockChangeCallback.EVENT.invoker().changeBlock(world, pos, blockState, world.getBlockState(pos), oldBlockEntity, world.getBlockEntity(pos), Sources.INSERT, player);
     }
 
     @Inject(method = "extinguish", at = @At(value = "INVOKE",
